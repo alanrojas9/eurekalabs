@@ -43,7 +43,7 @@ class DefaultController extends Controller
     public function pruebaAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('frontal/prueba2.html.twig');
+        return $this->render('frontal/prueba.html.twig');
     }
     
 }

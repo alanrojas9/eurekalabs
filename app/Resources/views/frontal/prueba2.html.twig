@@ -35,6 +35,46 @@
         <button onclick=requestFile(url);>get Alpha Vantage Data</button>
         &nbsp;
     </p>
+<table class="table table-bordered" id="tblClientes">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Valor de Apertura</th>
+            <th>Valor Max del día</th>
+            <th>Valor Min del día</th>
+            <th>Valor de cierre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>            
+            <td>1</td>
+            <td>Cliente1 apellido1</td>
+            <td>5467915414</td>
+            <td>
+                <center>
+                    <a onclick="alertar(this)" class="waves-effect waves-dark" href="#" aria-expanded="false">Mostrar
+                        <i class="fa fa-edit" data-toggle="tooltip" title="" data-original-title="Seleccionar"></i>
+                        <span class="hide-menu"></span>
+                    </a>
+                </center>
+            </td>
+        </tr>
+        <tr>            
+            <td>2</td>
+            <td>Cliente2 apellido2</td>
+            <td>5467915414</td>
+            <td>
+                <center>
+                    <a onclick="alertar(this)" class="waves-effect waves-dark" href="#" aria-expanded="false">Mostrar
+                        <i class="fa fa-edit" data-toggle="tooltip" title="" data-original-title="Seleccionar"></i>
+                        <span class="hide-menu"></span>
+                    </a>
+                </center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
     <div id="divContents">
     	Data will appear here after you push the button. This may take a number of seconds. Open the developer console to see more details.
     </div>
@@ -57,6 +97,11 @@
             xhr.onload = callback;
             xhr.send(null);
             function callback(xhr) {
+   				
+   				var tr = xhr.parentNode.parentNode.parentNode;
+   				var columns = tr.getElementsByTagName('td');
+   				console.log(columns[1].innerText);//segunda columna
+
             	const response = xhr.target.response;
                 divContents.innerText = response;
                 if (response.slice(0, 1) !== '{') { return; } // not a json file
