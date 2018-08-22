@@ -1,0 +1,81 @@
+{#Planilla de nuestra aplicacion#}
+{% extends 'base.html.twig' %}
+{#Titulo de Pagina#}
+{% block title %}  Pagina Prueba  {% endblock %}
+{#Contenido#}
+{% block body %}
+	<!doctype html>
+<html lang="en">
+
+<head>
+    <style>
+        /* Copyright (c) 2018 predIQtiv. MIT License */
+        body {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+    </style>
+</head>
+
+<body>
+<br>
+<br>
+    <h3>
+        <a href="">Alpha Vantage Search</a>
+    </h3>
+
+    <p>API key:
+        <input id=inpApiKey onchange=setStorage(); value='demo'>
+    </p>
+
+    <p>Symbol: &nbsp;
+        <input id=inpSymbol value='MSFT'>
+    </p>
+    <p>
+        <button onclick=requestFile(url);>get Alpha Vantage Data</button>
+        &nbsp;
+    </p>
+    <div id="divContents">
+    	Data will appear here after you push the button. This may take a number of seconds. Open the developer console to see more details.
+    </div>
+
+    <script>
+        // Thanks to http://www.alphavantage.co/
+        let apiKey;
+        let symbol;
+        init();
+        function init() {
+            apiKey = localStorage.getItem('apiKey');
+            inpApiKey.value = apiKey ? apiKey : '';
+        }
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=amzn&interval=1min&outputsize=compact&datatype=json&apikey=X86NOH6II01P7R24';
+        function requestFile(url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onerror = function (xhr) { console.log('error:', xhr); };
+            xhr.onprogress = function (xhr) { console.log('bytes loaded:', xhr.loaded); }; /// or something
+            xhr.onload = callback;
+            xhr.send(null);
+            function callback(xhr) {
+            	const response = xhr.target.response;
+                divContents.innerText = response;
+                if (response.slice(0, 1) !== '{') { return; } // not a json file
+                const json = JSON.parse(response);
+                console.log('json', json);
+            }
+        }
+        function setStorage() {
+            apiKey = inpApiKey.value;
+            localStorage.setItem('apiKey', apiKey);
+        }
+        function getStorage() {
+            apiKey = localStorage.getItem('apiKey');
+        }
+
+
+    </script>
+</body>
+
+</html>
+{% endblock %}
+
